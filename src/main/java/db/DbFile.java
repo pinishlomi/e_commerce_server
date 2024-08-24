@@ -69,5 +69,16 @@ public class DbFile extends Db{
         }
     }
 
-
+//    @Override
+//    public void saveSeller(Seller seller) {
+//        ObjectOutputStream file;
+//        try {
+//            file = new ObjectOutputStream(new FileOutputStream(filePath + SELLERS_FILENAME, true));
+//            file.writeObject(seller);
+//            file.close();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 }

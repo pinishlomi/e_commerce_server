@@ -11,7 +11,8 @@ public abstract class Db {
 
     abstract public Buyer[] readBuyers();
 
-    abstract public void saveSellers(Seller[] buyers);
+    abstract public void saveSellers(Seller[] sellers);
 
     abstract public Seller[] readSellers();
+//    abstract public void saveSeller(Seller seller);
 }

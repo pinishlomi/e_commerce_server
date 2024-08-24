@@ -2,10 +2,7 @@ package com.e_commerce;
 import bl.users.Buyer;
 import bl.users.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Pini Shlomi At 21/07/2024
@@ -27,8 +24,8 @@ public class ECommerceController {
         return eCommerceService.getSellers();
     }
 
-    @PostMapping("/post")
-    public String post(@RequestBody String data) {
-        return "POST request received with data: " + data;
+    @PostMapping("/addSeller")
+    public String post(@RequestBody Seller seller) {
+        return eCommerceService.addSeller(seller);
     }
 }
