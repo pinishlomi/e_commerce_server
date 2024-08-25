@@ -174,6 +174,15 @@ public class Manage {
         return buyer.addProduct(p);
     }
 
+    public double payBuyerOrder(String buyerName) throws CloneNotSupportedException {
+        for (Buyer buyer: buyers){
+            if (buyer.getName().equals(buyerName)){
+                return buyer.pay();
+            }
+        }
+        return -1;
+    }
+
     public double payBuyerOrder(Buyer buyer) throws CloneNotSupportedException {
         return buyer.pay();
     }

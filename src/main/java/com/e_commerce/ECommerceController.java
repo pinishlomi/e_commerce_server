@@ -1,6 +1,7 @@
 package com.e_commerce;
 import com.e_commerce.bl.users.Buyer;
 import com.e_commerce.bl.users.Seller;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +32,10 @@ public class ECommerceController {
     @PostMapping("/addSeller")
     public String post(@RequestBody Seller seller) {
         return eCommerceService.addSeller(seller);
+    }
+
+    @PutMapping("/pay/{buyerName}/payCart")
+    public String payCart(@PathVariable String buyerName){
+        return eCommerceService.pay(buyerName);
     }
 }

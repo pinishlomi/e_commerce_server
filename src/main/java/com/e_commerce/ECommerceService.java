@@ -146,4 +146,17 @@ public class ECommerceService {
             return "Something went wrong..." + e.getMessage();
         }
     }
+
+    public String pay(String buyerName) {
+        try {
+            double price = manage.payBuyerOrder(buyerName);
+            if (price == -1){
+                return "Something went wrong..Buyer not exist.";
+            } else {
+                return "Payment " + price + " succeed";
+            }
+        } catch (CloneNotSupportedException e) {
+            return "Something went wrong..." + e.getMessage();
+        }
+    }
 }
