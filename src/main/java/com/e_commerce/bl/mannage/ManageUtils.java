@@ -1,6 +1,6 @@
-package bl.mannage;
+package com.e_commerce.bl.mannage;
 
-import bl.general.Category;
+import com.e_commerce.bl.general.Category;
 
 /**
  * Created by Pini Shlomi At 10/07/2024

@@ -1,20 +1,22 @@
-package db;
+package com.e_commerce.db;
 
-import bl.users.Buyer;
-import bl.users.Seller;
+import com.e_commerce.bl.users.Buyer;
+import com.e_commerce.bl.users.Seller;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
 /**
  * Created by Pini Shlomi At 23/08/2024
  */
+@Component
 public class DbFile extends Db{
     private static final String BUYERS_FILENAME = "buyers.dat";
     private static final String SELLERS_FILENAME = "sellers.dat";
     private final String filePath;
 
     public DbFile() {
-        String packagePath = getClass().getPackage().getName().replace('.', File.separatorChar);
+//        String packagePath = getClass().getPackage().getName().replace('.', File.separatorChar);
         filePath = System.getProperty("user.dir") + File.separator + "src"
                 + File.separator + "main" + File.separator + "resources"+ File.separator + "db" + File.separator;
     }

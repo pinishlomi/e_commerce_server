@@ -1,4 +1,4 @@
-package bl.components;
+package com.e_commerce.bl.components;
 
 import java.io.Serializable;
 import java.util.Date;

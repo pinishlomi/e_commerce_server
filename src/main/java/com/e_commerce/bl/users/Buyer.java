@@ -1,8 +1,8 @@
-package bl.users;
+package com.e_commerce.bl.users;
 
-import bl.components.Cart;
-import bl.components.Product;
-import bl.general.Address;
+import com.e_commerce.bl.components.Cart;
+import com.e_commerce.bl.components.Product;
+import com.e_commerce.bl.general.Address;
 
 import java.io.Serializable;
 import java.util.Arrays;

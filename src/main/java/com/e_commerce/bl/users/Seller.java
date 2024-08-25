@@ -1,7 +1,7 @@
-package bl.users;
+package com.e_commerce.bl.users;
 
-import bl.components.Product;
-import bl.components.ProductsCollection;
+import com.e_commerce.bl.components.Product;
+import com.e_commerce.bl.components.ProductsCollection;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package bl.general;
+package com.e_commerce.bl.general;
 
 import java.io.Serializable;
 

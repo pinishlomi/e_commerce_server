@@ -1,4 +1,4 @@
-package bl.users;
+package com.e_commerce.bl.users;
 
 import java.io.Serializable;
 

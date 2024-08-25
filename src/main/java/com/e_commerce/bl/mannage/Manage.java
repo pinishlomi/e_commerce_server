@@ -1,17 +1,19 @@
-package bl.mannage;
+package com.e_commerce.bl.mannage;
 
-import bl.components.Product;
-import bl.components.ProductsCollection;
-import bl.general.Address;
-import bl.general.Category;
-import bl.users.Buyer;
-import bl.users.Seller;
+import com.e_commerce.bl.components.Product;
+import com.e_commerce.bl.components.ProductsCollection;
+import com.e_commerce.bl.general.Address;
+import com.e_commerce.bl.general.Category;
+import com.e_commerce.bl.users.Buyer;
+import com.e_commerce.bl.users.Seller;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
 /**
  * Created by Pini Shlomi At 07/06/2024
  */
+@Component
 public class Manage {
     private Buyer[] buyers;
     private int numOfBuyers;

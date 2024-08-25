@@ -1,7 +1,7 @@
-package bl.utils;
+package com.e_commerce.bl.utils;
 
 
-import bl.general.Message;
+import com.e_commerce.bl.general.Message;
 
 public class InputValidator {
 

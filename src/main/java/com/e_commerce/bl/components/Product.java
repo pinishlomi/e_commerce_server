@@ -1,6 +1,6 @@
-package bl.components;
+package com.e_commerce.bl.components;
 
-import bl.general.Category;
+import com.e_commerce.bl.general.Category;
 
 import java.io.Serializable;
 

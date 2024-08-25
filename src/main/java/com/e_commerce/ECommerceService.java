@@ -1,13 +1,12 @@
 package com.e_commerce;
 
-import bl.components.Product;
-import bl.general.Address;
-import bl.general.Category;
-import bl.mannage.Manage;
-import bl.users.Buyer;
-import bl.users.Seller;
-import db.Db;
-import db.DbFile;
+import com.e_commerce.bl.components.Product;
+import com.e_commerce.bl.general.Address;
+import com.e_commerce.bl.general.Category;
+import com.e_commerce.bl.mannage.Manage;
+import com.e_commerce.bl.users.Buyer;
+import com.e_commerce.bl.users.Seller;
+import com.e_commerce.db.DbFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ECommerceService {
     @Autowired
-    private static Manage manage;
-    private static Db db;
+    private Manage manage;
+    @Autowired
+    private DbFile db;
 
-    public ECommerceService() {
-        this.manage = new Manage();
+    public ECommerceService(Manage manage, DbFile db) {
+        this.manage = manage;
+        this.db = db;
         try {
             init();
         } catch (CloneNotSupportedException e) {
@@ -30,13 +31,13 @@ public class ECommerceService {
         }
     }
 
-    private static void init() throws CloneNotSupportedException {
-        db = new DbFile();
-//        initStartData(manage);
-        readFromFile(manage);
+
+    private void init() throws CloneNotSupportedException {
+//        initStartData();
+        readFromFile();
     }
 
-    private static void readFromFile(Manage manage) throws CloneNotSupportedException {
+    private void readFromFile() throws CloneNotSupportedException {
         Seller[] sellers = db.readSellers();
         for (Seller seller: sellers){
             manage.addSeller(seller);
@@ -63,7 +64,7 @@ public class ECommerceService {
         }
     }
 
-    private static void initStartData(Manage manage) throws CloneNotSupportedException {
+    private void initStartData() throws CloneNotSupportedException {
         Seller[] sellers = {
                 new Seller("Moshe Cohen", "123"),
                 new Seller("Ofri Gilad", "114"),

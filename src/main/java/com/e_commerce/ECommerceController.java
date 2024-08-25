@@ -1,6 +1,6 @@
 package com.e_commerce;
-import bl.users.Buyer;
-import bl.users.Seller;
+import com.e_commerce.bl.users.Buyer;
+import com.e_commerce.bl.users.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +13,10 @@ public class ECommerceController {
 
     @Autowired
     private ECommerceService eCommerceService;
+
+    public ECommerceController(ECommerceService eCommerceService) {
+        this.eCommerceService = eCommerceService;
+    }
 
     @GetMapping("/getBuyers")
     public Buyer[] getBuyers() {

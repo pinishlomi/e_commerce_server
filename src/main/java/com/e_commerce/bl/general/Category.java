@@ -1,4 +1,4 @@
-package bl.general;
+package com.e_commerce.bl.general;
 
 /**
  * Created by Pini Shlomi At 10/07/2024

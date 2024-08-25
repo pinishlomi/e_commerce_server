@@ -1,7 +1,7 @@
-package db;
+package com.e_commerce.db;
 
-import bl.users.Buyer;
-import bl.users.Seller;
+import com.e_commerce.bl.users.Buyer;
+import com.e_commerce.bl.users.Seller;
 
 /**
  * Created by Pini Shlomi At 23/08/2024
