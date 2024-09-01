@@ -6,6 +6,7 @@ import com.e_commerce.bl.general.Address;
 import com.e_commerce.bl.general.Category;
 import com.e_commerce.bl.users.Buyer;
 import com.e_commerce.bl.users.Seller;
+import com.e_commerce.bl.utils.InputValidator;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -24,13 +25,14 @@ public class Manage {
         buyers = new Buyer[0];
         sellers = new Seller[0];
     }
+
     public boolean addBuyer(String buyerName, String password, Address address) throws CloneNotSupportedException {
-        if (isBuyerExist(buyerName)){
-            return  false;
+        if (isBuyerExist(buyerName)) {
+            return false;
         }
-        if (numOfBuyers == 0){
+        if (numOfBuyers == 0) {
             buyers = new Buyer[2];
-        } else if (numOfBuyers == buyers.length){
+        } else if (numOfBuyers == buyers.length) {
             buyers = Arrays.copyOf(buyers, buyers.length * 2);
         }
         buyers[numOfBuyers++] = new Buyer(buyerName, password, address);
@@ -38,12 +40,12 @@ public class Manage {
     }
 
     public void addBuyer(Buyer buyer) throws CloneNotSupportedException {
-        if (isBuyerExist(buyer.getName())){
+        if (isBuyerExist(buyer.getName())) {
             return;
         }
-        if (numOfBuyers == 0){
+        if (numOfBuyers == 0) {
             buyers = new Buyer[2];
-        } else if (numOfBuyers == buyers.length){
+        } else if (numOfBuyers == buyers.length) {
             buyers = Arrays.copyOf(buyers, buyers.length * 2);
         }
         buyers[numOfBuyers++] = buyer.clone();
@@ -51,7 +53,7 @@ public class Manage {
 
     public boolean isBuyerExist(String buyerName) {
         for (int i = 0; i < numOfBuyers; i++) {
-            if (buyers[i].getName().equals(buyerName)){
+            if (buyers[i].getName().equals(buyerName)) {
                 return true;
             }
         }
@@ -59,12 +61,12 @@ public class Manage {
     }
 
     public boolean addSeller(String name, String password) {
-        if (isSellerExist(name)){
-            return  false;
+        if (isSellerExist(name)) {
+            return false;
         }
-        if (numOfSellers == 0){
+        if (numOfSellers == 0) {
             sellers = new Seller[2];
-        } else if (numOfSellers == sellers.length){
+        } else if (numOfSellers == sellers.length) {
             sellers = Arrays.copyOf(sellers, sellers.length * 2);
         }
         sellers[numOfSellers++] = new Seller(name, password);
@@ -72,19 +74,20 @@ public class Manage {
     }
 
     public void addSeller(Seller seller) throws CloneNotSupportedException {
-        if (isSellerExist(seller.getName())){
+        if (isSellerExist(seller.getName())) {
             return;
         }
-        if (numOfSellers == 0){
+        if (numOfSellers == 0) {
             sellers = new Seller[2];
-        } else if (numOfSellers == sellers.length){
+        } else if (numOfSellers == sellers.length) {
             sellers = Arrays.copyOf(sellers, sellers.length * 2);
         }
         sellers[numOfSellers++] = seller.clone();
     }
+
     public boolean isSellerExist(String sellerName) {
         for (int i = 0; i < numOfSellers; i++) {
-            if (sellers[i].getName().equals(sellerName)){
+            if (sellers[i].getName().equals(sellerName)) {
                 return true;
             }
         }
@@ -95,26 +98,27 @@ public class Manage {
         StringBuilder sb = new StringBuilder();
         if (numOfBuyers == 0) {
             sb.append("Buyers list are empty");
-        }else {
+        } else {
             sb.append("All Buyers:\n");
             for (int i = 0; i < numOfBuyers; i++) {
                 sb.append(i + 1)
-                        .append( ") ")
+                        .append(") ")
                         .append(buyers[i])
                         .append("\n");
             }
         }
         return sb.toString();
     }
+
     public String showSellers() {
         StringBuilder sb = new StringBuilder();
         if (numOfSellers == 0) {
             sb.append("Sellers list are empty");
-        }else {
+        } else {
             sb.append("All Sellers:\n");
             for (int i = 0; i < numOfSellers; i++) {
                 sb.append(i + 1)
-                        .append( ") ")
+                        .append(") ")
                         .append(sellers[i])
                         .append("\n");
             }
@@ -126,7 +130,7 @@ public class Manage {
         StringBuilder sb = new StringBuilder();
         if (numOfSellers == 0) {
             sb.append("Sellers list are empty");
-        }else {
+        } else {
             sb.append("All Products By ").append(category.name()).append(" Category:\n");
             ProductsCollection productsCollection;
             Product p;
@@ -134,13 +138,38 @@ public class Manage {
                 productsCollection = sellers[i].getProducts();
                 for (int j = 0; j < productsCollection.getNumOfProduct(); j++) {
                     p = productsCollection.getProducts()[j];
-                    if (p.getCategory().equals(category)){
+                    if (p.getCategory().equals(category)) {
                         sb.append(p).append("\n");
                     }
                 }
             }
         }
         return sb.toString();
+    }
+
+    public Product[] getProductsByCategory(String categoryStr) {
+        ProductsCollection productsByCategory = new ProductsCollection();
+        Category category = ManageUtils.getCategory(categoryStr);
+        if (category == null || numOfSellers == 0) {
+            return productsByCategory.getProducts();
+        } else {
+            ProductsCollection productsCollection;
+            Product p;
+            for (int i = 0; i < numOfSellers; i++) {
+                productsCollection = sellers[i].getProducts();
+                for (int j = 0; j < productsCollection.getNumOfProduct(); j++) {
+                    p = productsCollection.getProducts()[j];
+                    if (p.getCategory().equals(category)) {
+                        productsByCategory.addProduct(p);
+                    }
+                }
+            }
+        }
+        Product[] products = new Product[productsByCategory.getNumOfProduct()];
+        for (int i = 0; i < productsByCategory.getNumOfProduct(); i++) {
+            products[i] = productsByCategory.getProducts()[i];
+        }
+        return products;
     }
 
     public int getNumOfBuyers() {
@@ -152,7 +181,7 @@ public class Manage {
     }
 
     public Seller getSellerByIndex(int index) {
-        if (index < 0 || index >= numOfSellers){
+        if (index < 0 || index >= numOfSellers) {
             return null;
         }
         return sellers[index];
@@ -163,8 +192,17 @@ public class Manage {
         return seller.addProduct(p);
     }
 
+    public boolean addProductToSeller(String sellerName, Product p) {
+        for (Seller seller : sellers) {
+            if (seller.getName().equals(sellerName)) {
+                return seller.addProduct(p);
+            }
+        }
+        return false;
+    }
+
     public Buyer getBuyerByIndex(int index) {
-        if (index < 0 || index >= numOfBuyers){
+        if (index < 0 || index >= numOfBuyers) {
             return null;
         }
         return buyers[index];
@@ -174,9 +212,18 @@ public class Manage {
         return buyer.addProduct(p);
     }
 
+    public boolean addProductToBuyer(String buyerName, Product p) {
+        for (Buyer buyer : buyers) {
+            if (buyer.getName().equals(buyerName)) {
+                return buyer.addProduct(p);
+            }
+        }
+        return false;
+    }
+
     public double payBuyerOrder(String buyerName) throws CloneNotSupportedException {
-        for (Buyer buyer: buyers){
-            if (buyer.getName().equals(buyerName)){
+        for (Buyer buyer : buyers) {
+            if (buyer.getName().equals(buyerName)) {
                 return buyer.pay();
             }
         }
@@ -191,7 +238,7 @@ public class Manage {
         StringBuilder sb = new StringBuilder();
         if (numOfSellers == 0) {
             sb.append("Sellers list are empty");
-        }else {
+        } else {
             sb.append("All Sellers:\n");
             for (int i = 0; i < numOfSellers; i++) {
                 sb.append(i + 1)
@@ -202,11 +249,12 @@ public class Manage {
         }
         return sb.toString();
     }
+
     public String showBuyersList() {
         StringBuilder sb = new StringBuilder();
         if (numOfBuyers == 0) {
             sb.append("Buyers list are empty");
-        }else {
+        } else {
             sb.append("All Buyers:\n");
             for (int i = 0; i < numOfBuyers; i++) {
                 sb.append(i + 1)

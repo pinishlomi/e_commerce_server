@@ -48,6 +48,70 @@ public class ECommerceService {
         }
     }
 
+    public String addSeller(Seller seller) {
+        try {
+            manage.addSeller(seller);
+            Seller[] sellers = manage.getSellers();
+            db.saveSellers(sellers);
+            return "Seller added..";
+        } catch (CloneNotSupportedException e) {
+            return "Something went wrong..." + e.getMessage();
+        }
+    }
+    public String addBuyer(Buyer buyer) {
+        try {
+            manage.addBuyer(buyer);
+            Buyer[] buyers = manage.getBuyers();
+            db.saveBuyers(buyers);
+            return "Buyer added..";
+        } catch (CloneNotSupportedException e) {
+            return "Something went wrong..." + e.getMessage();
+        }
+    }
+    public String addProductToSeller(String sellerName, Product product) {
+        if (manage.addProductToSeller(sellerName, product)){
+            try {
+                Seller[] sellers = manage.getSellers();
+                db.saveSellers(sellers);
+                return "product added to seller successfully..";
+            } catch (CloneNotSupportedException e) {
+                return "Something went wrong..can't save sellers with the new details.";
+            }
+        }
+        return "Something went wrong..product not added to seller.";
+    }
+    public String addProductToBuyer(String buyerName, Product product) {
+        if (manage.addProductToBuyer(buyerName, product)){
+            try {
+                Buyer[] buyers = manage.getBuyers();
+                db.saveBuyers(buyers);
+                return "product added to buyer successfully..";
+            } catch (CloneNotSupportedException e) {
+                return "Something went wrong..can't save buyers with the new details.";
+            }
+        }
+        return "Something went wrong..product not added to buyer.";
+    }
+    public String pay(String buyerName) {
+        try {
+            double price = manage.payBuyerOrder(buyerName);
+            if (price == -1){
+                return "Something went wrong..Buyer not exist.";
+            } else {
+                return "Payment " + price + " succeed";
+            }
+        } catch (CloneNotSupportedException e) {
+            return "Something went wrong..." + e.getMessage();
+        }
+    }
+    public Seller[] getSellers() {
+        try {
+            return manage.getSellers();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
+
     public Buyer[] getBuyers() {
         try {
             return manage.getBuyers();
@@ -56,12 +120,8 @@ public class ECommerceService {
         }
     }
 
-    public Seller[] getSellers() {
-        try {
-            return manage.getSellers();
-        } catch (CloneNotSupportedException e) {
-            return null;
-        }
+    public Product[] getProductsByCategory(String category) {
+        return manage.getProductsByCategory(category);
     }
 
     private void initStartData() throws CloneNotSupportedException {
@@ -134,29 +194,5 @@ public class ECommerceService {
         }
         db.saveSellers(sellers);
         db.saveBuyers(buyers);
-    }
-
-    public String addSeller(Seller seller) {
-        try {
-            manage.addSeller(seller);
-            Seller[] sellers = manage.getSellers();
-            db.saveSellers(sellers);
-            return "Seller added..";
-        } catch (CloneNotSupportedException e) {
-            return "Something went wrong..." + e.getMessage();
-        }
-    }
-
-    public String pay(String buyerName) {
-        try {
-            double price = manage.payBuyerOrder(buyerName);
-            if (price == -1){
-                return "Something went wrong..Buyer not exist.";
-            } else {
-                return "Payment " + price + " succeed";
-            }
-        } catch (CloneNotSupportedException e) {
-            return "Something went wrong..." + e.getMessage();
-        }
     }
 }

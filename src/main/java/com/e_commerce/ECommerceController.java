@@ -1,4 +1,7 @@
 package com.e_commerce;
+
+import com.e_commerce.bl.components.Product;
+import com.e_commerce.bl.components.ProductsCollection;
 import com.e_commerce.bl.users.Buyer;
 import com.e_commerce.bl.users.Seller;
 import jakarta.websocket.server.PathParam;
@@ -13,10 +16,35 @@ import org.springframework.web.bind.annotation.*;
 public class ECommerceController {
 
     @Autowired
-    private ECommerceService eCommerceService;
+    private final ECommerceService eCommerceService;
 
     public ECommerceController(ECommerceService eCommerceService) {
         this.eCommerceService = eCommerceService;
+    }
+
+    @PostMapping("/addSeller")
+    public String addSeller(@RequestBody Seller seller) {
+        return eCommerceService.addSeller(seller);
+    }
+
+    @PostMapping("/addBuyer")
+    public String addBuyer(@RequestBody Buyer buyer) {
+        return eCommerceService.addBuyer(buyer);
+    }
+
+    @PostMapping("/addProductToSeller/{sellerName}")
+    public String addProductToSeller(@PathVariable String sellerName, @RequestBody Product product) {
+        return eCommerceService.addProductToSeller(sellerName, product);
+    }
+
+    @PostMapping("/addProductToBuyer/{buyerName}")
+    public String addProductToBuyer(@PathVariable String buyerName, @RequestBody Product product) {
+        return eCommerceService.addProductToBuyer(buyerName, product);
+    }
+
+    @PutMapping("/pay/{buyerName}")
+    public String payCart(@PathVariable String buyerName) {
+        return eCommerceService.pay(buyerName);
     }
 
     @GetMapping("/getBuyers")
@@ -29,13 +57,9 @@ public class ECommerceController {
         return eCommerceService.getSellers();
     }
 
-    @PostMapping("/addSeller")
-    public String post(@RequestBody Seller seller) {
-        return eCommerceService.addSeller(seller);
+    @GetMapping("/getProducts/{category}")
+    public Product[] getProductsByCategory(@PathVariable String category) {
+        return eCommerceService.getProductsByCategory(category);
     }
 
-    @PutMapping("/pay/{buyerName}/payCart")
-    public String payCart(@PathVariable String buyerName){
-        return eCommerceService.pay(buyerName);
-    }
 }
